@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+</head>
+<body>
+    <a href="{{ url_for('index') }}">Home</a>
+    <h1>Dashboard</h1>
+    <p>Welcome, {{ current_user.username }}!</p>
+
+    <h2>Add a Website</h2>
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.name.label }}<br>
+            {{ form.name() }}<br>
+            {% for error in form.name.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.url.label }}<br>
+            {{ form.url() }}<br>
+            {% for error in form.url.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <ul>
+            {% for category, message in messages %}
+                {% if category == 'success' %}
+                <li style="color: green;">{{ message }}</li>
+                {% elif category == 'error' %}
+                <li style="color: red;">{{ message }}</li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+        {% endif %}
+    {% endwith %}
+
+    <h2>Your Websites:</h2>
+    <ul>
+        {% for website in websites %}
+            <li>{{ website[2] }} - <a href="{{ website[3] }}" target="_blank">{{ website[3] }}</a>
+                <form action="{{ url_for('delete', website_id=website[0]) }}" method="POST" style="display:inline;">
+                    <button type="submit">Delete</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <a href="{{ url_for('logout') }}">Logout</a>
+</body>
+</html>
