@@ -1,49 +1,164 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <title>Dashboard</title>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Login - Site Tracker</title>
+
+    <!-- Favicons -->
+    <link href="{{ url_for('static', filename='img/favicon_io/favicon.ico') }}" rel="icon">
+    <link href="{{ url_for('static', filename='img/favicon_io/apple-touch-icon.png') }}" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+        rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="{{ url_for('static', filename='assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='assets/vendor/boxicons/css/boxicons.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='assets/vendor/quill/quill.snow.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='assets/vendor/quill/quill.bubble.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='assets/vendor/remixicon/remixicon.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='assets/vendor/simple-datatables/style.css') }}" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="{{ url_for('static', filename='assets/css/style.css') }}" rel="stylesheet">
+
 </head>
+
 <body>
-    <a href="{{ url_for('index') }}">Home</a>
-    <h1>Sign Up</h1>
-    <form action="" method="post">
-        {{ form.hidden_tag() }}
-        <p>
-            {{ form.username.label }}<br>
-            {{ form.username(size=32) }}<br>
-            {% for error in form.username.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.password.label }}<br>
-            {{ form.password(size=32) }}<br>
-            {% for error in form.password.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.confirm_password.label }}<br>
-            {{ form.confirm_password(size=32) }}<br>
-            {% for error in form.confirm_password.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>{{ form.submit() }}</p>
-        <p>Already have an account? <a href="{{ url_for('login') }}">Click to Log In!</a> </p>
-    </form>
-    {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-        <ul>
-            {% for category, message in messages %}
-                {% if category == 'success' %}
-                <li style="color: green;">{{ message }}</li>
-                {% elif category == 'error' %}
-                <li style="color: red;">{{ message }}</li>
-                {% endif %}
-            {% endfor %}
-        </ul>
-        {% endif %}
-    {% endwith %}
+
+<main>
+    <div class="container">
+        <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
+
+                        <!-- Site Tracker Logo -->
+                        <div class="d-flex justify-content-center py-4">
+                            <a href="{{ url_for('index') }}" class="logo d-flex align-items-center w-auto">
+                                <img src="{{ url_for('static', filename='img/logo.png') }}" alt="">
+                                <span class="d-none d-lg-block">Site Tracker</span>
+                            </a>
+                        </div>
+
+                        <div class="card mb-3">
+
+                            <div class="card-body">
+                                
+                                <div class="pt-4 pb-2">
+                                    <h5 class="card-title text-center pb-0 fs-4">Create an Account</h5>
+                                    <p class="text-center small">Enter your details to create an account</p>
+                                </div>
+
+                                <form action="{{ url_for('register') }}" method="post" class="row g-3 needs-validation" novalidate>
+
+                                    <div class="col-12">
+                                        {{ form.hidden_tag() }}
+                                        <label for="yourUsername" class="form-label">
+                                            {{ form.username.label }}
+                                        </label>
+                                        <div class="input-group has-validation">
+                                            <span class="input-group-text" id="inputGroupPrepend">@</span>
+                                            {{ form.username(class='form-control', id='yourUsername', required=True) }}
+                                            <div class="invalid-feedback">Please choose a username.</div>
+                                        </div>
+                                        {% for error in form.username.errors %}
+                                        <div class="invalid-feedback" style="display: block; color: red;">{{ error }}</div>
+                                        {% endfor %}
+                                    </div>
+
+                                   <div class="col-12">
+                                        <label for="yourPassword" class="form-label">{{ form.password.label }}</label>
+                                        {{ form.password(class='form-control', id='yourPassword', required=True) }}
+                                        <div class="invalid-feedback">Please enter your password.</div>
+                                        {% for error in form.password.errors %}
+                                        <div class="invalid-feedback" style="display: block; color: red;">{{ error }}</div>
+                                        {% endfor %}
+                                    </div>
+
+                                    <div class="col-12">
+                                        <label for="confirmPassword" class="form-label">{{ form.confirm_password.label }}</label>
+                                        {{ form.confirm_password(class='form-control', id='confirmPassword', required=True) }}
+                                        <div class="invalid-feedback">Please confirm your password.</div>
+                                        {% for error in form.confirm_password.errors %}
+                                        <div class="invalid-feedback" style="display: block; color: red;">{{ error }}</div>
+                                        {% endfor %}
+                                    </div>
+
+                                    <div class="col-12">
+                                        <button class="btn btn-primary w-100" type="submit">Create Account</button>
+                                    </div>
+                                    <div class="col-12">
+                                        <p class="small mb-0">Already have an account? <a href="{{ url_for('login') }}">Log in</a></p>
+                                    </div>
+                                </form>
+                                <div class="col-12">
+                                    {% with messages = get_flashed_messages(with_categories=true) %}
+                                        {% if messages %}
+                                        <div class="alert alert-danger" role="alert">
+                                            <ul class="mb-0">
+                                                {% for category, message in messages %}
+                                                    {% if category == 'error' %}
+                                                        {{ message }}
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                        {% endif %}
+                                    {% endwith %}
+                                </div>
+
+                            </div>
+                        </div>
+
+                            <div class="credits">
+                                <p style="text-align: center;">
+                                    Site Tracker &copy; 2024. All Rights Reserved
+                                    <br>
+                                    <!-- All the links in the footer should remain intact. -->
+                                    <!-- You can delete the links only if you purchased the pro version. -->
+                                    <!-- Licensing information: https://bootstrapmade.com/license/ -->
+                                    <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
+                                    Designed by <a href="https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/" target="_blank">NiceAdmin</a>
+                                </p>
+                                <p>Developed with ❤ by <a href="https://ahmedsalim3.github.io" target="_blank">Ahmed Salim</a></p>
+                                <div style="text-align: center;">
+                                    <a href="https://github.com/ahmedsalim3/flask-site-tracker" target="_blank">
+                                        <img src="{{ url_for('static', filename='img/github.svg') }}" alt="GitHub" style="width: 20px; height: 20px; margin-right: 10px;">
+                                    </a>
+                                    <a href="https://www.linkedin.com/in/ahmed-salim-b73aa9200/" target="_blank">
+                                        <img src="{{ url_for('static', filename='img/linkedin.svg') }}" alt="LinkedIn" style="width: 20px; height: 20px;">
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+
+        </div>
+    </main><!-- End #main -->
+
+    <!-- Vendor JS Files -->
+    <script src="{{ url_for('static', filename='assets/vendor/apexcharts/apexcharts.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/vendor/chart.js/chart.umd.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/vendor/echarts/echarts.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/vendor/quill/quill.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/vendor/simple-datatables/simple-datatables.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/vendor/tinymce/tinymce.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/vendor/php-email-form/validate.js') }}"></script>
+
+    <!-- Template Main JS File -->
+    <script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
 </body>
+
 </html>
