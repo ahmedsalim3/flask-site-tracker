@@ -3,6 +3,13 @@ import sqlite3
 
 
 class Database:
+    """
+    A class to manage a SQLite database defined in a configuration file.
+    
+    The schema is fixed and will be applied during initialization. 
+    NOTE: This class is not critical for the application to run, as the schema will 
+    be created within the app itself if it does not already exist.
+    """
     def __init__(self, database=Config.DATABASE, schema=Config.SCHEMA):
         self.database = database
         self.schema = schema
