@@ -4,11 +4,11 @@
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Login - NiceAdmin</title>
+    <title>Login - Site Tracker</title>
 
     <!-- Favicons -->
-    <link href="{{ url_for('static', filename='assets/img/favicon_io/favicon.ico') }}" rel="icon">
-    <link href="{{ url_for('static', filename='assets/img/favicon_io/apple-touch-icon.png') }}" rel="apple-touch-icon">
+    <link href="{{ url_for('static', filename='img/favicon_io/favicon.ico') }}" rel="icon">
+    <link href="{{ url_for('static', filename='img/favicon_io/apple-touch-icon.png') }}" rel="apple-touch-icon">
 
     <!-- Google Fonts -->
     <link href="https://fonts.gstatic.com" rel="preconnect">
@@ -44,7 +44,7 @@
                             <!-- Home Logo -->
                             <div class="d-flex justify-content-center py-4">
                                 <a href="{{ url_for('index') }}" class="logo d-flex align-items-center w-auto">
-                                    <img src="{{ url_for('static', filename='assets/img/logo.png') }}" alt="">
+                                    <img src="{{ url_for('static', filename='img/logo.png') }}" alt="">
                                     <span class="d-none d-lg-block">Home</span>
                                 </a>
                             </div>
@@ -122,8 +122,24 @@
                             </div>
 
                             <div class="credits">
-                                © Copyright <a href="">. All Rights Reserved
-                                Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+                                <p style="text-align: center;">
+                                    Site Tracker &copy; 2024. All Rights Reserved
+                                    <br>
+                                    <!-- All the links in the footer should remain intact. -->
+                                    <!-- You can delete the links only if you purchased the pro version. -->
+                                    <!-- Licensing information: https://bootstrapmade.com/license/ -->
+                                    <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
+                                    Designed by <a href="https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/" target="_blank">NiceAdmin</a>
+                                </p>
+                                <p>Developed with ❤ by <a href="https://ahmedsalim3.github.io" target="_blank">Ahmed Salim</a></p>
+                                <div style="text-align: center;">
+                                    <a href="https://github.com/ahmedsalim3/flask-site-tracker" target="_blank">
+                                        <img src="{{ url_for('static', filename='img/github.svg') }}" alt="GitHub" style="width: 20px; height: 20px; margin-right: 10px;">
+                                    </a>
+                                    <a href="https://www.linkedin.com/in/ahmed-salim-b73aa9200/" target="_blank">
+                                        <img src="{{ url_for('static', filename='img/linkedin.svg') }}" alt="LinkedIn" style="width: 20px; height: 20px;">
+                                    </a>
+                                </div>
                             </div>
 
                         </div>
