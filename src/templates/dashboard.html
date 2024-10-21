@@ -1,57 +1,202 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <title>Dashboard</title>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Dashboard - Site Tracker</title>
+
+    <!-- Favicons -->
+    <link href="{{ url_for('static', filename='img/favicon_io/favicon.ico') }}" rel="icon">
+    <link href="{{ url_for('static', filename='img/favicon_io/apple-touch-icon.png') }}" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+        rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <!-- surced from https://bootstrapmade.com/content/templatefiles/NiceAdmin/NiceAdmin.zip -->
+    <link href="{{ url_for('static', filename='assets/css/bootstrap.min.css') }}" rel="stylesheet">
+
+
+    <!-- Template Main CSS File -->
+    <link href="{{ url_for('static', filename='assets/css/style.css') }}" rel="stylesheet">
+
 </head>
+
 <body>
-    <a href="{{ url_for('index') }}">Home</a>
-    <h1>Dashboard</h1>
-    <p>Welcome, {{ current_user.username }}!</p>
 
-    <h2>Add a Website</h2>
-    <form action="" method="post" novalidate>
-        {{ form.hidden_tag() }}
-        <p>
-            {{ form.name.label }}<br>
-            {{ form.name() }}<br>
-            {% for error in form.name.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.url.label }}<br>
-            {{ form.url() }}<br>
-            {% for error in form.url.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>{{ form.submit() }}</p>
-    </form>
-    {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-        <ul>
-            {% for category, message in messages %}
-                {% if category == 'success' %}
-                <li style="color: green;">{{ message }}</li>
-                {% elif category == 'error' %}
-                <li style="color: red;">{{ message }}</li>
-                {% endif %}
-            {% endfor %}
+    <!-- ======= Header ======= -->
+    <header id="header" class="header fixed-top d-flex align-items-center">
+
+        <nav class="header-nav ms-auto">
+            <ul class="d-flex align-items-center">
+
+
+                <li class="nav-item dropdown pe-3">
+
+                    <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+                      <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Profile" class="rounded-circle">
+                      <span class="d-none d-md-block dropdown-toggle ps-2">{{ current_user.username }}</span>
+                    </a><!-- End Profile Iamge Icon -->
+          
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+                      <li class="dropdown-header">
+                        <h6>{{ current_user.username }}</h6>
+                      </li>
+                      <li>
+                        <hr class="dropdown-divider">
+                      </li>
+          
+                      <li>
+                        <a class="dropdown-item d-flex align-items-center" href="{{ url_for('logout') }}">
+                          <i class="bi bi-box-arrow-right"></i>
+                          <span>Sign Out</span>
+                        </a>
+                      </li>
+          
+                    </ul><!-- End Profile Dropdown Items -->
+                  </li><!-- End Profile Nav -->
+            </ul>
+        </nav><!-- End Icons Navigation -->
+    
+      </header><!-- End Header -->
+
+      <!-- ======= Sidebar ======= -->
+    <aside id="sidebar" class="sidebar">
+        <ul class="sidebar-nav" id="sidebar-nav">
+
+            <li class="nav-item">
+                <a class="nav-link " data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-layout-text-window-reverse"></i><span>Home</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="tables-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
+                <li>
+                    <a href="" class="active">
+                    <i class="bi bi-circle"></i><span>Your Websites</span>
+                    </a>
+                </li>
+                </ul>
+            </li><!-- End Tables Nav -->
         </ul>
-        {% endif %}
-    {% endwith %}
+    </aside><!-- End Sidebar-->
 
-    <h2>Your Websites:</h2>
-    <ul>
-        {% for website in websites %}
-            <li>{{ website[2] }} - <a href="{{ website[3] }}" target="_blank">{{ website[3] }}</a>
-                <form action="{{ url_for('delete', website_id=website[0]) }}" method="POST" style="display:inline;">
-                    <button type="submit">Delete</button>
-                </form>
-            </li>
-        {% endfor %}
-    </ul>
+    <main id="main" class="main">
 
-    <a href="{{ url_for('logout') }}">Logout</a>
+        <div class="pagetitle">
+          <h1>Your Websites</h1>
+          <nav>
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item">Home</li>
+              <li class="breadcrumb-item active">Your Websites</li>
+            </ol>
+          </nav>
+        </div><!-- End Page Title -->
+
+        <section class="section">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Datatables</h5>
+                            <p>Add your websites </p>
+
+                            <form action="{{ url_for('dashboard') }}" method="post" class="row g-3 needs-validation" novalidate>
+                                <div class="col-12">
+                                    {{ form.hidden_tag() }}
+                                    <label for="YourWebName" class="form-label">
+                                        {{ form.name.label }}
+                                    </label>
+                                    <div class="input-group has-validation">
+                                        {{ form.name(class='form-control', id='YourWebName', required=True) }}
+                                        <div class="invalid-feedback">Please enter a website name.</div>
+                                        {% for error in form.name.errors %}
+                                        <div class="invalid-feedback" style="display: block; color: red;">{{ error }}</div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            
+                                <div class="col-12">
+                                    <label for="YourWebUrl" class="form-label">
+                                        {{ form.url.label }}
+                                    </label>
+                                    <div class="input-group has-validation">
+                                        {{ form.url(class='form-control', id='YourWebUrl', required=True) }}
+                                        <div class="invalid-feedback">Please enter a valid website URL.</div>
+                                        {% for error in form.url.errors %}
+                                        <div class="invalid-feedback" style="display: block; color: red;">{{ error }}</div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            
+                                <div class="col-12">
+                                    <button class="btn btn-primary w-100" type="submit">{{ form.submit.label }}</button>
+                                </div>
+                                
+                            </form>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>URL</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for website in websites %}
+                                        <tr>
+                                            <td>{{ website[2] }}</td>
+                                            <td><a href="{{ website[3] }}" target="_blank">{{ website[3] }}</a></td>
+                                            <td>
+                                                <form action="{{ url_for('delete', website_id=website[0]) }}" method="POST" style="display:inline;">
+                                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main><!-- End #main -->
+
+        <!-- ======= Footer ======= -->
+  <footer id="footer" class="footer">
+    <div class="copyright">
+        <strong><span>Site Tracker</span></strong> &copy; 2024. All Rights Reserved
+    </div>
+    <div class="credits">
+        <!-- All the links in the footer should remain intact. -->
+        <!-- You can delete the links only if you purchased the pro version. -->
+        <!-- Licensing information: https://bootstrapmade.com/license/ -->
+        <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
+        Designed by <a href="https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/" target="_blank">NiceAdmin</a>
+    </div>
+    <div style="text-align: center;">
+        <p>Developed with ❤ by <a href="https://ahmedsalim3.github.io" target="_blank">Ahmed Salim</a></p>
+        <a href="https://github.com/ahmedsalim3/flask-site-tracker" target="_blank">
+            <img src="{{ url_for('static', filename='img/github.svg') }}" alt="GitHub" style="width: 20px; height: 20px; margin-right: 10px;">
+        </a>
+        <a href="https://www.linkedin.com/in/ahmed-salim-b73aa9200/" target="_blank">
+            <img src="{{ url_for('static', filename='img/linkedin.svg') }}" alt="LinkedIn" style="width: 20px; height: 20px;">
+        </a>
+    </div>
+  </footer><!-- End Footer -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+<!-- Vendor JS Files -->
+<!-- surced from https://bootstrapmade.com/content/templatefiles/NiceAdmin/NiceAdmin.zip -->
+<script src="{{ url_for('static', filename='assets/js/bootstrap.bundle.min.js') }}"></script>
+
+<!-- Template Main JS File -->
+<script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
 </body>
+
 </html>
+
