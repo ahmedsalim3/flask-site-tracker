@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>{% block title %}Site Tracker{% endblock %}</title>
+
+    <!-- Favicons -->
+    <link href="{{ url_for('static', filename='img/favicon_io/favicon.ico') }}" rel="icon">
+    <link href="{{ url_for('static', filename='img/favicon_io/apple-touch-icon.png') }}" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+        rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <!-- surced from https://bootstrapmade.com/content/templatefiles/NiceAdmin/NiceAdmin.zip -->
+    <link href="{{ url_for('static', filename='assets/css/bootstrap.min.css') }}" rel="stylesheet">
+
+
+    <!-- Template Main CSS File -->
+    <link href="{{ url_for('static', filename='assets/css/style.css') }}" rel="stylesheet">
+
+</head>
+
+<body>
+
+<main>
+    <div class="container">
+        <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
+
+                        <!-- Site Tracker Logo -->
+                        <div class="d-flex justify-content-center py-4">
+                            <a href="{{ url_for('index') }}" class="logo d-flex align-items-center w-auto">
+                                <img src="{{ url_for('static', filename='img/logo.png') }}" alt="">
+                                <span class="d-none d-lg-block">Site Tracker</span>
+                            </a>
+                        </div>
+
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="pt-4 pb-2">
+                                    <h5 class="card-title text-center pb-0 fs-4">{% block card_title %}some title{% endblock %}</h5>
+                                    <p class="text-center small">{% block card_subtitle %}some subtitle{% endblock %}</p>
+                                </div>
+
+                                {% block content %}{% endblock %}
+
+                                
+                            </div>
+                        </div>
+
+                        <div class="credits">
+                            <p style="text-align: center;">
+                                Site Tracker &copy; 2024. All Rights Reserved
+                                <br>
+                                <!-- All the links in the footer should remain intact. -->
+                                <!-- You can delete the links only if you purchased the pro version. -->
+                                <!-- Licensing information: https://bootstrapmade.com/license/ -->
+                                <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
+                                Designed by <a href="https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/" target="_blank">NiceAdmin</a>
+                            </p>
+                            <p>Developed with ❤ by <a href="https://ahmedsalim3.github.io" target="_blank">Ahmed Salim</a></p>
+                            <div style="text-align: center;">
+                                <a href="https://github.com/ahmedsalim3/flask-site-tracker" target="_blank">
+                                    <img src="{{ url_for('static', filename='img/github.svg') }}" alt="GitHub" style="width: 20px; height: 20px; margin-right: 10px;">
+                                </a>
+                                <a href="https://www.linkedin.com/in/ahmed-salim-b73aa9200/" target="_blank">
+                                    <img src="{{ url_for('static', filename='img/linkedin.svg') }}" alt="LinkedIn" style="width: 20px; height: 20px;">
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+    </div>
+</main><!-- End #main -->
+
+<!-- Template Main JS File -->
+<!-- surced from https://bootstrapmade.com/content/templatefiles/NiceAdmin/NiceAdmin.zip -->
+<script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
+</body>
+
+</html>
